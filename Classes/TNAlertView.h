@@ -92,9 +92,8 @@ typedef void(^TNAlertViewItemHandler)(TNAlertView *alertView);
 @property (nonatomic, strong) UIColor *splitColor;          // Default is #CCCCCC.
 
 @property (nonatomic, strong) UIColor *itemNormalColor;     // Default is #FFFFFF. effect with TNItemTypeNormal
-@property (nonatomic, strong) UIColor *itemHighlightColor;  // Default is #E76153. effect with TNItemTypeHighlight
-@property (nonatomic, strong) UIColor *itemPressedColor;    // Default is #EFEDE7.
-@property (nonatomic, strong) UIColor *itemTitleColor;    // Default is #EFEDE7.
-
+@property (nonatomic, strong) UIColor *itemDestructiveColor;  // Default is #E76153. effect with TNItemTypeHighlight
+@property (nonatomic, strong) UIColor *itemDestructiveTitleColor;    // Default is #EFEDE7.
+@property (nonatomic, strong) UIColor *itemTitleColor;
 
 @end

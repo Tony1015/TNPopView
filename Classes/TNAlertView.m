@@ -35,6 +35,7 @@
                         inputPlaceholder:(NSString*)inputPlaceholder
                             inputHandler:(TNAlertInputHandler)inputHandler{
     TNAlertView *view = [[TNAlertView alloc]initWithTitle:title detail:detail items:items inputPlaceholder:inputPlaceholder inputHandler:inputHandler];
+    [view show];
     return view;
 }
 
@@ -43,6 +44,7 @@
                         detail:(NSString*)detail
                          items:(NSArray<TNAlertViewItem *> *)items{
     TNAlertView *view = [[TNAlertView alloc]initWithTitle:title detail:detail items:items];
+    [view show];
     return view;
 }
 
@@ -130,8 +132,7 @@
             [self addSubview:self.titleLabel];
             [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(lastAttribute).offset(config.innerMargin);
-//                make.left.right.equalTo(self).insets(UIEdgeInsetsMake(0, config.innerMargin, 0, config.innerMargin));
-                make.left.offset(config.innerMargin);
+                make.left.right.equalTo(self).insets(UIEdgeInsetsMake(0, config.innerMargin, 0, config.innerMargin));
             }];
             self.titleLabel.textColor = config.titleColor;
             self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -148,7 +149,7 @@
             self.detailLabel = [UILabel new];
             [self addSubview:self.detailLabel];
             [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(lastAttribute).offset(5);
+                make.top.equalTo(lastAttribute).offset(config.innerMargin);
                 make.left.right.equalTo(self).insets(UIEdgeInsetsMake(0, config.innerMargin, 0, config.innerMargin));
             }];
             self.detailLabel.textColor = config.detailColor;
@@ -233,24 +234,23 @@
                 lastButton = btn;
             }];
             
-            
-            [btn setBackgroundImage:[UIImage tn_creatImageWithColor:self.backgroundColor] forState:UIControlStateNormal];
-            [btn setBackgroundImage:[UIImage tn_creatImageWithColor:config.itemPressedColor] forState:UIControlStateHighlighted];
             [btn setTitle:item.title forState:UIControlStateNormal];
             
-            [btn setContentEdgeInsets:UIEdgeInsetsMake(0, config.innerMargin, 0, config.innerMargin)];
             switch (item.style) {
                 case TNAlertViewItemStyleNormal:
-                    [btn setTitleColor:config.itemNormalColor forState:UIControlStateNormal];
-                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+                    [btn setTitleColor:config.itemTitleColor forState:UIControlStateNormal];
+                    [btn setBackgroundImage:[UIImage tn_creatImageWithColor:config.itemNormalColor] forState:UIControlStateNormal];
+//                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                     break;
                 case TNAlertViewItemStyleCancel:
-                    [btn setTitleColor:config.itemNormalColor forState:UIControlStateNormal];
-                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                    [btn setTitleColor:config.itemTitleColor forState:UIControlStateNormal];
+                    [btn setBackgroundImage:[UIImage tn_creatImageWithColor:config.itemNormalColor] forState:UIControlStateNormal];
+//                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                     break;
                 case TNAlertViewItemStyleDestructive:
-                    [btn setTitleColor:config.itemHighlightColor forState:UIControlStateNormal];
-                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+                    [btn setTitleColor:config.itemDestructiveTitleColor forState:UIControlStateNormal];
+                    [btn setBackgroundImage:[UIImage tn_creatImageWithColor:config.itemDestructiveColor] forState:UIControlStateNormal];
+//                    [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                     break;
                     
                 default:
@@ -363,6 +363,7 @@
     if (!_popView) {
         _popView = [TNPopWindow popViewWithContentView:self];
         _popView.clickDismiss = self.clickDismiss;
+        _popView.style = TNPopViewStyleAlert;
     }
     return _popView;
 }
@@ -446,10 +447,10 @@
         self.detailColor        = [UIColor tn_colorWithHex:(0x333333FF)];
         self.splitColor         = [UIColor tn_colorWithHex:(0xCCCCCCFF)];
         
-        self.itemNormalColor    = [UIColor tn_colorWithHex:(0x333333FF)];
-        self.itemHighlightColor = [UIColor tn_colorWithHex:(0xE76153FF)];
-        self.itemPressedColor   = [UIColor tn_colorWithHex:(0xEFEDE7FF)];
-        self.itemTitleColor     = [UIColor tn_colorWithHex:(0x333333FF)];
+        self.itemNormalColor    = [UIColor tn_colorWithHex:(0xE4E4E4FF)];
+        self.itemDestructiveColor = [UIColor tn_colorWithHex:(0xF87EB7FF)];
+        self.itemTitleColor   = [UIColor tn_colorWithHex:(0x999999FF)];
+        self.itemDestructiveTitleColor     = [UIColor tn_colorWithHex:(0xFFFFFFFF)];
         
     }
     
@@ -457,3 +458,4 @@
 }
 
 @end
+
